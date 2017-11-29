@@ -97,6 +97,10 @@ void *playDay(void *vargp)
 
 int main(int argc, char *argv[])
 {
+    if (argc < 5){
+        printf("Pass parameters huntsman cooks quarry food");
+        return 0;
+    }
     huntsman = atoi(argv[1]);
     cooks = atoi(argv[2]);
     quarry = atoi(argv[3]);
@@ -104,8 +108,13 @@ int main(int argc, char *argv[])
     pthread_t tid;
     pthread_mutex_init(&mutex, NULL);
     for (int d=1;d<=365;d++){
-        pthread_create(&tid, NULL, playDay, &d);
-        pthread_join(tid, NULL);
+        if(huntsman==cooks && cooks==0){
+            printf("Your village lasted for %d day(s)!\n", d-1);
+            break;
+        }else{
+            pthread_create(&tid, NULL, playDay, &d);
+            pthread_join(tid, NULL);
+        }
     }
     return 0;
 }
