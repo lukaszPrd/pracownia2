@@ -5,4 +5,4 @@ main: main.o
 	$(CC) ${CFLAGS} -o main main.o
 
 run: main
-./main
+	./main
