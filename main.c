@@ -3,7 +3,7 @@
 #include <pthread.h>
 #include <time.h>
 #include <stdbool.h>
-#include <windows.h>
+#include <unistd.h>
 
 int huntsman, cooks, quarry, food;
 
@@ -24,7 +24,6 @@ void cook(){
         printf("There is no quarry to make food!\n");
     }
     pthread_mutex_unlock(&mutex);
-    return NULL;
 }
 
 void increaseQuarry(){
@@ -63,7 +62,7 @@ void *hunter(void *vargp){
         huntsman--;
         printf("Hunter left the village\n");
     }
-    Sleep(500);
+    usleep(500);
     pthread_exit(NULL);
     return NULL;
 }
@@ -75,7 +74,7 @@ void *chef(void *vargp){
         cooks--;
         printf("Chef left the village\n");
     }
-    Sleep(500);
+    usleep(500);
     pthread_exit(NULL);
     return NULL;
 }
@@ -98,10 +97,10 @@ void *playDay(void *vargp)
 
 int main(int argc, char *argv[])
 {
-    huntsman = (int)argv[1];
-    cooks = (int)argv[2];
-    quarry = (int)argv[3];
-    food = (int)argv[4];
+    huntsman = atoi(argv[1]);
+    cooks = atoi(argv[2]);
+    quarry = atoi(argv[3]);
+    food = atoi(argv[4]);
     pthread_t tid;
     pthread_mutex_init(&mutex, NULL);
     for (int d=1;d<=365;d++){
